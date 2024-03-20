@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "631231874543",
+    "project_id": "kurycx-83189",
+    "storage_bucket": "kurycx-83189.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631231874543:android:27b6f71319dcd85ee4e21a",
+        "android_client_info": {
+          "package_name": "com.shaztech.kurycx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw6QXz12qqyj9SQ5vV1Z-0Wl5MAcKNJ6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
