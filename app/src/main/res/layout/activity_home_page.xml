@@ -94,6 +94,19 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv_cxSnNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="S.N: 1"
+                        android:textAllCaps="true"
+                        android:textColor="#EF1000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
                         android:id="@+id/tv_cxname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -104,8 +117,7 @@
                         android:textColor="@color/bluetheme"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        />
 
                     <TextView
                         android:id="@+id/tv_cxphone"
@@ -116,8 +128,7 @@
                         android:text="@string/_91_9876543210"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="@+id/tv_cxname"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_cxname" />
+                        />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/bt_isdraw"
@@ -126,8 +137,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
                         android:text="DRAW: ?"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_cxphone" />
+                        />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/bt_cxlocation"
@@ -138,9 +148,7 @@
                         android:layout_marginBottom="8dp"
                         android:layout_marginStart="16dp"                        android:text="LOCATION"
                         android:textColor="@color/bluetheme"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_isdraw" />
+                       />
 
 
 

@@ -61,6 +61,8 @@ public class HomePageActivity extends AppCompatActivity {
     private ViewFlipper viewFlipper;
     MaterialButton paidBtn, balanceBtn;
 
+    private TextView snumberTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -335,6 +337,7 @@ public class HomePageActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
+                                snumberTv.setText("Serial Number: 0" +String.valueOf(document.getLong("serial_number").intValue()));
                                 cxNameTv.setText(document.getString("name"));
                                 cxPhoneTv.setText(document.getString("phone"));
                                 cxIsDrawBtn.setText("Draw Week: "+document.getString("draw_week"));
@@ -370,6 +373,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void init_cx_ui() {
+        snumberTv = findViewById(R.id.tv_cxSnNumber);
         viewFlipper = findViewById(R.id.viewFlipper);
         cxIsDrawBtn = findViewById(R.id.bt_isdraw);
         cxLocationBtn = findViewById(R.id.bt_cxlocation);
