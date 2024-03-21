@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ public class DrawCompletedScreenActivity extends AppCompatActivity {
     FirebaseFirestore db;
     private AlertDialog youWinDialog;
 
+    ImageButton backBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,16 @@ public class DrawCompletedScreenActivity extends AppCompatActivity {
         addressTv = findViewById(R.id.drawWinnerLocationTextView);
         dpImageView = findViewById(R.id.drawWinnerProfileImageView);
         drawWeekTv = findViewById(R.id.textViewDrawWeek);
+
+        //backsaB
+        backBtn=findViewById(R.id.backsaB);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
 
         Intent intent = getIntent();
         getWinnerGuid = intent.getStringExtra("winner_guid");
@@ -103,5 +117,8 @@ public class DrawCompletedScreenActivity extends AppCompatActivity {
         youWinDialog = builder.create();
         youWinDialog.show();
 
+    }
+    public void goBack() {
+        getOnBackPressedDispatcher().onBackPressed();
     }
 }
