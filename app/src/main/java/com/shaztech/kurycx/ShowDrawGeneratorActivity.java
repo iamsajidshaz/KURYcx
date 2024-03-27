@@ -3,6 +3,8 @@ package com.shaztech.kurycx;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,11 +35,20 @@ public class ShowDrawGeneratorActivity extends AppCompatActivity {
 
     Handler handler;
     int delay = 200; //milliseconds
+    ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_draw_generator);
+
+        backBtn=findViewById(R.id.rcBackButton);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
 
         db = FirebaseFirestore.getInstance();
         textView = findViewById(R.id.textViewLoadingNames);
@@ -45,6 +56,10 @@ public class ShowDrawGeneratorActivity extends AppCompatActivity {
 
         fetchFieldValueFromMultipleDocuments();
 
+    }
+
+    private void goBack() {
+        getOnBackPressedDispatcher().onBackPressed();
     }
 
     private void fetchFieldValueFromMultipleDocuments() {
