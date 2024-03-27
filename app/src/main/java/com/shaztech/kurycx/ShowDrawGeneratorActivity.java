@@ -35,20 +35,15 @@ public class ShowDrawGeneratorActivity extends AppCompatActivity {
 
     Handler handler;
     int delay = 200; //milliseconds
-    ImageButton backBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_draw_generator);
 
-        backBtn=findViewById(R.id.rcBackButton);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
+
+
 
         db = FirebaseFirestore.getInstance();
         textView = findViewById(R.id.textViewLoadingNames);
