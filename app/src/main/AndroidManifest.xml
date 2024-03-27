@@ -13,6 +13,9 @@
         android:theme="@style/Theme.KURYcx"
         tools:targetApi="31">
         <activity
+            android:name=".ShowDrawGeneratorActivity"
+            android:exported="false" />
+        <activity
             android:name=".SupportScreenActivity"
             android:exported="false" />
         <activity

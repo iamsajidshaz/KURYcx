@@ -131,11 +131,11 @@ public class HomePageActivity extends AppCompatActivity {
         showWinnerCv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // showDrawGenerateScreen();
+               // startThread();
+                Intent showDraw = new Intent(HomePageActivity.this, ShowDrawGeneratorActivity.class);
+                startActivity(showDraw);
 
-                showDrawGenerateScreen();
-                startThread();
-
-               //
 
             }
         });

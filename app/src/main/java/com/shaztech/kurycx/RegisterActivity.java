@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,8 +26,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -37,6 +36,12 @@ public class RegisterActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private FirebaseAuth mAuth;
     FirebaseFirestore db;
+
+    // for serial number
+    private static final String NUMBER_COLLECTION = "numbers";
+    private static final String NUMBER_DOCUMENT = "incrementing_number";
+    int inc_number_in_db;
+    int storing_inc_number_to_db;
 
 
     @Override
@@ -136,7 +141,8 @@ public class RegisterActivity extends AppCompatActivity {
 //                                    Intent login = new Intent(getApplicationContext(), HomePageActivity.class);
 //                                    startActivity(login);
 //                                    finish();
-                                    createUserprofile();
+                                    //createUserprofile();
+                                    init_s_n();
                                 }
                                 if (!task.isSuccessful()) {
                                     dialog.dismiss();
@@ -153,8 +159,65 @@ public class RegisterActivity extends AppCompatActivity {
                 );
 
     }
+    private void init_s_n() {
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = rootRef.collection(NUMBER_COLLECTION);
 
-    private void createUserprofile() {
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        inc_number_in_db = document.getLong("current_number").intValue();
+                        storing_inc_number_to_db = inc_number_in_db + 1;
+                        updateNextIncNumber(storing_inc_number_to_db);
+
+                    }
+
+                }
+            }
+        });
+
+    }
+    private void updateNextIncNumber(int i) {
+
+
+        db = FirebaseFirestore.getInstance();
+        CollectionReference docRef = db.collection(NUMBER_COLLECTION);
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("current_number", i);
+
+        // ----------------
+        docRef.document(NUMBER_DOCUMENT).update(updates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                           @Override
+                                           public void onComplete(@NonNull Task<Void> task) {
+                                               if (task.isSuccessful()) {
+                                                   // Update successful
+                                                   Toast.makeText(getApplicationContext(), "SN UPDATED", Toast.LENGTH_SHORT).show();
+                                                   createUserprofile(i);
+                                               } else {
+                                                   Toast.makeText(getApplicationContext(), "SN NOT UPDATED", Toast.LENGTH_SHORT).show();
+
+                                               }
+                                           }
+                                       }
+
+                ).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+        // --------------------
+
+
+    }
+
+    private void createUserprofile(int i) {
         String gUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         db = FirebaseFirestore.getInstance();
@@ -173,7 +236,7 @@ public class RegisterActivity extends AppCompatActivity {
         updates.put("balance", "100000");
         updates.put("current_week_balance", "0");
         updates.put("dp_link", "NA");
-
+        updates.put("serial_number", i);
         // update
         docRef.document(gUid).set(updates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

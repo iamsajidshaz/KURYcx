@@ -34,12 +34,10 @@ import java.util.Map;
 
 public class UpdateDpActivity extends AppCompatActivity {
 
-    private static final String NUMBER_COLLECTION = "numbers";
-    private static final String NUMBER_DOCUMENT = "incrementing_number";
+
     // request code
     private final int PICK_IMAGE_REQUEST = 22;
-    int inc_number_in_db;
-    int storing_inc_number_to_db;
+
     // instance for firebase storage and StorageReference
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -56,7 +54,7 @@ public class UpdateDpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_dp);
 
-        init_s_n();
+
 
         btnUploadProfile = findViewById(R.id.btnUploadProfilePicture);
         profilePictureImageView = findViewById(R.id.imageViewProfilePicture);
@@ -96,96 +94,11 @@ public class UpdateDpActivity extends AppCompatActivity {
 
     }
 
-    private void init_s_n() {
-        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = rootRef.collection(NUMBER_COLLECTION);
-
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        inc_number_in_db = document.getLong("current_number").intValue();
-                        storing_inc_number_to_db = inc_number_in_db + 1;
-                        updateNextIncNumber(storing_inc_number_to_db);
-
-                    }
-
-                }
-            }
-        });
-
-    }
-
-    private void updateNextIncNumber(int i) {
 
 
-        db = FirebaseFirestore.getInstance();
-        CollectionReference docRef = db.collection(NUMBER_COLLECTION);
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("current_number", i);
-
-        // ----------------
-        docRef.document(NUMBER_DOCUMENT).update(updates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                           @Override
-                                           public void onComplete(@NonNull Task<Void> task) {
-                                               if (task.isSuccessful()) {
-                                                   // Update successful
-                                                   Toast.makeText(getApplicationContext(), "SN UPDATED", Toast.LENGTH_SHORT).show();
-                                                    updateToUserProfile(i);
-                                               } else {
-                                                   Toast.makeText(getApplicationContext(), "SN NOT UPDATED", Toast.LENGTH_SHORT).show();
-
-                                               }
-                                           }
-                                       }
-
-                ).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
 
 
-        // --------------------
 
-
-    }
-
-    private void updateToUserProfile(int i) {
-        String g=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        db = FirebaseFirestore.getInstance();
-        CollectionReference docRef = db.collection("Customers");
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("serial_number", i);
-        //
-        docRef.document(g).update(updates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                           @Override
-                                           public void onComplete(@NonNull Task<Void> task) {
-                                               if (task.isSuccessful()) {
-                                                   // Update successful
-                                                   Toast.makeText(getApplicationContext(), "CX SN UPDATED", Toast.LENGTH_SHORT).show();
-
-                                               } else {
-                                                   Toast.makeText(getApplicationContext(), "CX SN NOT UPDATED", Toast.LENGTH_SHORT).show();
-
-                                               }
-                                           }
-                                       }
-
-                ).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "CX SN Failed", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-    }
 
     private void CompleteProfile() {
 
